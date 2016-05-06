@@ -6,12 +6,13 @@ public class Main {
 		boolean running=true;
 		boolean valid;
 		
-		board.spawnTile();
-		System.out.print(board);
-		
 		while(running) {
+			
 			valid=false;
 			while(!valid) {
+				board.spawnTile();
+				System.out.print(board);
+				
 				System.out.print("Enter move (WASD): ");
 				String move = scanner.next();
 				
@@ -39,6 +40,8 @@ public class Main {
 			board.spawnTile();
 			System.out.print(board);
 		}
+		System.out.println("Loop exited");
 		scanner.close();
+
 	}
 }

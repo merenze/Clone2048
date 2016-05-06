@@ -55,6 +55,7 @@ public class Board {
 		for (int row=1;row<4;row++) {
 			for (int col=0;col<4;col++) {
 				iteration(row, col);
+				
 				if (board[row][col]!=null) { //If tile contains value
 					if (board[row-1][col]==null) { //If space above is empty
 						board[row-1][col]=board[row][col];
@@ -64,7 +65,8 @@ public class Board {
 						
 						row=1;
 						col=0;
-					} else if (board[row-1][col].getValue()==board[row][col].getValue()&&!board[row-1][col].used()&&!board[row][col].used()) { //If tile above is same value and has not been used
+					} else if (board[row-1][col].equals(board[row][col]) && //If tile above is same value
+							   !board[row-1][col].used() && !board[row][col].used()) { //And neither tile has been used
 						board[row-1][col].doubleValue(); //Combine the tiles
 						board[row-1][col].setUsed(true); //Mark the above tile as used
 						board[row][col]=null;
@@ -78,15 +80,36 @@ public class Board {
 			}
 		}
 		//Mark tiles as unused
-		for(int row=0;row<4;row++) {
-			for(int col=0;col<4;col++) {
-				if(board[row][col]!=null) board[row][col].setUsed(false);
-			}
-		}
+		markUnused();
 		System.out.println("MOVE COMPLETED");
 	}
 	public void down() {
-		
+		for (int row=2;row>=0;row--) {
+			for (int col=0;col<4;col++) {
+				if(board[row][col]!=null) {
+					if (board[row+1][col]==null) {
+						board[row+1][col]=board[row][col];
+						board[row][col]=null;
+						
+						description(row,col,row+1,col,false);
+						
+						row=2;
+						col=0;
+					}
+					else if (board[row+1][col].equals(board[row][col]) &&
+							 !board[row+1][col].used() && !board[row][col].used()) {
+						board[row+1][col].doubleValue();
+						board[row+1][col].setUsed(true);
+						board[row][col]=null;
+						
+						description(row,col,row+1,col,true);
+						
+						row=2;
+						col=0;
+					}
+				}
+			}
+		}
 	}
 	public void left() {
 		
@@ -94,13 +117,21 @@ public class Board {
 	public void right() {
 		
 	}
-	
+	//Helper methods
+	private void markUnused() {
+		for(int row=0;row<4;row++) {
+			for(int col=0;col<4;col++) {
+				if(board[row][col]!=null) board[row][col].setUsed(false);
+			}
+		}
+	}
+	//Debug messages
 	private void iteration(int row, int col) {
 		System.out.println("Row " + row + ", Col " + col);
 	}
 	private void description(int r1, int c1, int r2, int c2, boolean combining) {
 		String result = "Moving [" + r1 + "][" + c1 + "] to [" + r2 + "][" + c2 + "]";
-		if (combining) result+=" (COMBINING)";
+		if (combining) result+=" (COMBINING TILES)";
 		else result+=" (SPACE AVAILABLE)";
 		System.out.println(result);
 	}

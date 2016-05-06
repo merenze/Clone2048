@@ -23,6 +23,10 @@ public class Tile {
 	public boolean used() {
 		return used;
 	}
+	public boolean equals(Tile tile) {
+		if (tile.getValue()==value) return true;
+		else return false;
+	}
 	//Mutators
 	public void doubleValue() {
 		value*=2;
