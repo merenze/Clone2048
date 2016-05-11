@@ -52,8 +52,8 @@ public class Board {
 	//Moves
 	public void up() {
 		//Move the tiles
-		for (int row=1;row<4;row++) {
-			for (int col=0;col<4;col++) {
+		for (int row=1;row<=3;row++) {
+			for (int col=0;col<=3;col++) {
 				iteration(row, col);
 				
 				if (board[row][col]!=null) { //If tile contains value
@@ -85,7 +85,7 @@ public class Board {
 	}
 	public void down() {
 		for (int row=2;row>=0;row--) {
-			for (int col=0;col<4;col++) {
+			for (int col=0;col<=3;col++) {
 				if(board[row][col]!=null) {
 					if (board[row+1][col]==null) {
 						board[row+1][col]=board[row][col];
@@ -110,9 +110,36 @@ public class Board {
 				}
 			}
 		}
+		markUnused();
 	}
 	public void left() {
-		
+		for (int col=1;col<=3;col++) {
+			for (int row=0;row<=3;row++) {
+				if(board[row][col]!=null) {
+					if (board[row][col-1]==null) {
+						board[row][col-1]=board[row][col];
+						board[row][col]=null;
+						
+						description(row,col,row,col-1,false);
+						
+						row=0;
+						col=1;
+					}
+					else if(board[row][col-1].equals(board[row][col]) &&
+							!board[row][col-1].used() && !board[row][col].used()) {
+					board[row][col-1].doubleValue();
+					board[row][col-1].setUsed(true);
+					board[row][col]=null;
+					
+					description(row,col,row,col-1,true);
+					
+					row=0;
+					col=1;
+					}
+				}
+			}
+		}
+		markUnused();
 	}
 	public void right() {
 		

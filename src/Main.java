@@ -37,8 +37,6 @@ public class Main {
 						System.out.println("Please enter a valid move.");
 				}
 			}
-			board.spawnTile();
-			System.out.print(board);
 		}
 		System.out.println("Loop exited");
 		scanner.close();
