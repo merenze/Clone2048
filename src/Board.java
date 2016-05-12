@@ -48,6 +48,7 @@ public class Board {
 			}
 		}
 		board[row][col]=new Tile();
+		System.out.printf("Spawning new tile at [%d][%d]",row,col);
 	}
 	//Moves
 	public void up() {
@@ -86,6 +87,8 @@ public class Board {
 	public void down() {
 		for (int row=2;row>=0;row--) {
 			for (int col=0;col<=3;col++) {
+				iteration(row,col);
+				
 				if(board[row][col]!=null) {
 					if (board[row+1][col]==null) {
 						board[row+1][col]=board[row][col];
@@ -115,6 +118,7 @@ public class Board {
 	public void left() {
 		for (int col=1;col<=3;col++) {
 			for (int row=0;row<=3;row++) {
+				iteration(row,col);
 				if(board[row][col]!=null) {
 					if (board[row][col-1]==null) {
 						board[row][col-1]=board[row][col];
