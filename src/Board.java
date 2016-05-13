@@ -65,7 +65,7 @@ public class Board {
 						description(row,col,row-1,col,false);
 						
 						row=1;
-						col=0;
+						col=-1;
 					} else if (board[row-1][col].equals(board[row][col]) && //If tile above is same value
 							   !board[row-1][col].used() && !board[row][col].used()) { //And neither tile has been used
 						board[row-1][col].doubleValue(); //Combine the tiles
@@ -75,14 +75,12 @@ public class Board {
 						description(row,col,row-1,col,true);
 						
 						row=1;
-						col=0;
+						col=-1;
 					}
 				}
 			}
 		}
-		//Mark tiles as unused
 		markUnused();
-		System.out.println("MOVE COMPLETED");
 	}
 	public void down() {
 		for (int row=2;row>=0;row--) {
@@ -126,7 +124,7 @@ public class Board {
 						
 						description(row,col,row,col-1,false);
 						
-						row=0;
+						row=-1;
 						col=1;
 					}
 					else if(board[row][col-1].equals(board[row][col]) &&
@@ -137,7 +135,7 @@ public class Board {
 					
 					description(row,col,row,col-1,true);
 					
-					row=0;
+					row=-1;
 					col=1;
 					}
 				}
