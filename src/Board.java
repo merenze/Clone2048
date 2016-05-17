@@ -52,7 +52,7 @@ public class Board {
 			}
 			System.out.printf("Attempting to spawn tile at [%d][%d]\n",row,col);
 			try {
-			valid=board[row][col]==null;
+				valid=board[row][col]==null;
 			} catch (ArrayIndexOutOfBoundsException ex) {
 				System.out.printf("Array index out of bounds: [%d][%d]\n", row,col);
 			}
@@ -136,8 +136,7 @@ public class Board {
 						
 						row=-1;
 						col=1;
-					}
-					else if(board[row][col-1].equals(board[row][col]) &&
+					} else if(board[row][col-1].equals(board[row][col]) &&
 							!board[row][col-1].used() && !board[row][col].used()) {
 					board[row][col-1].doubleValue();
 					board[row][col-1].setUsed(true);
@@ -154,7 +153,33 @@ public class Board {
 		markUnused();
 	}
 	public void right() {
-		
+		for (int col=2;col>=0;col--) {
+			for (int row=0;row<=3;row++) {
+				iteration(row,col);
+				if(board[row][col]!=null) {
+					if(board[row][col+1]==null) {
+						board[row][col+1]=board[row][col];
+						board[row][col]=null;
+						
+						description(row,col,row,col+1,false);
+						
+						row=-1;
+						col=2;
+					} else if (board[row][col+1].equals(board[row][col]) &&
+							!board[row][col+1].used() && !board[row][col].used()) {
+						board[row][col+1].doubleValue();
+						board[row][col+1].setUsed(true);
+						board[row][col]=null;
+						
+						description(row,col,row,col+1,true);
+						
+						row=-1;
+						col=2;
+					}
+				}
+			}
+		}
+		markUnused();
 	}
 	//Helper methods
 	private void markUnused() {
