@@ -40,11 +40,21 @@ public class Board {
 		int col = random.nextInt(4);
 		boolean valid = board[row][col]==null;
 		while (!valid) {
-			if (row<=3) {
+			if (row<3) {
 				row++;
 			} else {
 				row=0;
-				col++;
+				if (col<3) {
+					col++;
+				} else {
+					col=0;
+				}
+			}
+			System.out.printf("Attempting to spawn tile at [%d][%d]\n",row,col);
+			try {
+			valid=board[row][col]==null;
+			} catch (ArrayIndexOutOfBoundsException ex) {
+				System.out.printf("Array index out of bounds: [%d][%d]\n", row,col);
 			}
 		}
 		board[row][col]=new Tile();
@@ -156,12 +166,19 @@ public class Board {
 	}
 	//Debug messages
 	private void iteration(int row, int col) {
-		System.out.println("Row " + row + ", Col " + col);
+		String result="Row " + row + ", Col " + col;
+		if(board[row][col]==null) {
+			result+=" (NULL)";
+		} else {
+			result+=" (" + board[row][col] + ")";
+		}
+		System.out.println(result);
 	}
 	private void description(int r1, int c1, int r2, int c2, boolean combining) {
 		String result = "Moving [" + r1 + "][" + c1 + "] to [" + r2 + "][" + c2 + "]";
 		if (combining) result+=" (COMBINING TILES)";
 		else result+=" (SPACE AVAILABLE)";
+		result+=" (" + board[r2][c2] + ")";
 		System.out.println(result);
 	}
 }
