@@ -33,6 +33,14 @@ public class Board {
 		}
 		return result;
 	}
+	public boolean isFull() {
+		for (int row=0;row<=3;row++) {
+			for (int col=0;col<=3;col++) {
+				if (board[row][col]==null) return false;
+			}
+		}
+		return true;
+	}
 	//Mutators
 	public void spawnTile() {
 		java.util.Random random = new java.util.Random();
