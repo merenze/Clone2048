@@ -1,13 +1,15 @@
 //Add test for loser - traverse board, check if current tile == next
 public class Board {
 	private Tile[][] board;
+	private int score;
 	public Board() {
 		board = new Tile[4][4];
 	}
 	//Accessors
 	@Override
 	public String toString() {
-		String result="\n|----|----|----|----|\n";
+		String result="\nScore: " + score +
+				"\n|----|----|----|----|\n";
 		for (int row=0;row<4;row++) {
 			result+="|";
 			for (int col=0;col<4;col++) {
@@ -49,6 +51,9 @@ public class Board {
 			}
 		}
 		return false;
+	}
+	public boolean loss() {
+		
 	}
 	/*
 	 * Mutators
@@ -212,6 +217,7 @@ public class Board {
 		board[r2][c2].doubleValue();
 		board[r2][c2].setUsed(true);
 		board[r1][c1]=null;
+		score+=board[r2][c2].getValue();
 		description(r1,c1,r2,c2,true);
 	}
 	//Debug messages
