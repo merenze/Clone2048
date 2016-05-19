@@ -184,6 +184,7 @@ public class Board {
 			}
 		}
 		markUnused();
+		return result;
 	}
 	public boolean right() {
 		boolean result=false;
@@ -216,6 +217,7 @@ public class Board {
 			}
 		}
 		markUnused();
+		return result;
 	}
 	//Helper methods
 	private void markUnused() {

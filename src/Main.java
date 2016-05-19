@@ -7,10 +7,9 @@ public class Main {
 		boolean valid;
 		
 		while(running) {
-			
+			board.spawnTile();
 			valid=false;
 			while(!valid) {
-				board.spawnTile();
 				System.out.print(board);
 				
 				System.out.print("Enter move (WASD): ");
@@ -18,20 +17,16 @@ public class Main {
 				
 				switch(move.toUpperCase()) {
 					case "W":
-						board.up();
-						valid=true;
+						if(board.up()) valid=true;
 						break;
 					case "A":
-						board.left();
-						valid=true;
+						if(board.left()) valid=true;
 						break;
 					case "S":
-						board.down();
-						valid=true;
+						if(board.down()) valid=true;
 						break;
 					case "D":
-						board.right();
-						valid=true;
+						if(board.right()) valid=true;
 						break;
 					default:
 						System.out.println("Please enter a valid move.");
