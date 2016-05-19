@@ -83,7 +83,8 @@ public class Board {
 		}
 	}
 	//Moves
-	public void up() {
+	public boolean up() {
+		boolean result=false; //Tells whether tiles have been moved
 		//Move the tiles
 		for (int row=1;row<=3;row++) {
 			for (int col=0;col<=3;col++) {
@@ -96,6 +97,7 @@ public class Board {
 						
 						description(row,col,row-1,col,false);
 						
+						result=true;
 						row=1;
 						col=-1;
 					} else if (board[row-1][col].equals(board[row][col]) && //If tile above is same value
@@ -106,6 +108,7 @@ public class Board {
 						
 						description(row,col,row-1,col,true);
 						
+						result=true;
 						row=1;
 						col=-1;
 					}
@@ -113,8 +116,10 @@ public class Board {
 			}
 		}
 		markUnused();
+		return result;
 	}
-	public void down() {
+	public boolean down() {
+		boolean result=false;
 		for (int row=2;row>=0;row--) {
 			for (int col=0;col<=3;col++) {
 				iteration(row,col);
@@ -126,6 +131,7 @@ public class Board {
 						
 						description(row,col,row+1,col,false);
 						
+						result=true;
 						row=2;
 						col=0;
 					}
@@ -137,6 +143,7 @@ public class Board {
 						
 						description(row,col,row+1,col,true);
 						
+						result=true;
 						row=2;
 						col=0;
 					}
@@ -144,8 +151,10 @@ public class Board {
 			}
 		}
 		markUnused();
+		return result;
 	}
-	public void left() {
+	public boolean left() {
+		boolean result=false;
 		for (int col=1;col<=3;col++) {
 			for (int row=0;row<=3;row++) {
 				iteration(row,col);
@@ -156,6 +165,7 @@ public class Board {
 						
 						description(row,col,row,col-1,false);
 						
+						result=true;
 						row=-1;
 						col=1;
 					} else if(board[row][col-1].equals(board[row][col]) &&
@@ -166,6 +176,7 @@ public class Board {
 					
 					description(row,col,row,col-1,true);
 					
+					result=true;
 					row=-1;
 					col=1;
 					}
@@ -174,7 +185,8 @@ public class Board {
 		}
 		markUnused();
 	}
-	public void right() {
+	public boolean right() {
+		boolean result=false;
 		for (int col=2;col>=0;col--) {
 			for (int row=0;row<=3;row++) {
 				iteration(row,col);
@@ -185,6 +197,7 @@ public class Board {
 						
 						description(row,col,row,col+1,false);
 						
+						result=true;
 						row=-1;
 						col=2;
 					} else if (board[row][col+1].equals(board[row][col]) &&
@@ -195,6 +208,7 @@ public class Board {
 						
 						description(row,col,row,col+1,true);
 						
+						result=true;
 						row=-1;
 						col=2;
 					}
