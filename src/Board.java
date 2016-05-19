@@ -45,15 +45,26 @@ public class Board {
 	public boolean victory() {
 		for (int row=0;row<=3;row++) {
 			for (int col=0;col<=3;col++) {
-				if (board[row][col].getValue()==2048) {
-					return true;
+				if (board[row][col]!=null) {
+					if (board[row][col].getValue()==2048) return true;
 				}
 			}
 		}
 		return false;
 	}
-	public boolean loss() {
-		
+	public boolean lost() {
+		if (!isFull()) return false;
+		for (int row=0;row<=3;row++) {
+			for (int col=0;col<=2;col++) {
+				if (board[row][col].equals(board[row][col+1])) return false;
+			}
+		}
+		for (int col=0;col<=3;col++) {
+			for (int row=0;row<=2;row++) {
+				if (board[row][col].equals(board[row+1][col])) return false;
+			}
+		}
+		return true;
 	}
 	/*
 	 * Mutators

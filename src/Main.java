@@ -8,33 +8,43 @@ public class Main {
 		
 		while(running) {
 			board.spawnTile();
-			valid=false;
-			while(!valid) {
-				System.out.print(board);
-				
-				System.out.print("Enter move (WASD): ");
-				String move = scanner.next();
-				
-				switch(move.toUpperCase()) {
-					case "W":
-						if(board.up()) valid=true;
-						break;
-					case "A":
-						if(board.left()) valid=true;
-						break;
-					case "S":
-						if(board.down()) valid=true;
-						break;
-					case "D":
-						if(board.right()) valid=true;
-						break;
-					default:
-						System.out.println("Please enter a valid move.");
-						break;
+			if (board.victory()) {
+				System.out.println("Victory! Keeping playing? Y/N: ");
+				if (!scanner.next().equalsIgnoreCase("Y")) {
+					running=false;
 				}
+			} else if (!board.lost()) {
+				valid=false;
+				while(!valid) {
+					System.out.print(board);
+					
+					System.out.print("Enter move (WASD): ");
+					String move = scanner.next();
+					
+					switch(move.toUpperCase()) {
+						case "W":
+							if(board.up()) valid=true;
+							break;
+						case "A":
+							if(board.left()) valid=true;
+							break;
+						case "S":
+							if(board.down()) valid=true;
+							break;
+						case "D":
+							if(board.right()) valid=true;
+							break;
+						default:
+							System.out.println("Please enter a valid move.");
+							break;
+					}
+				}
+			} else {
+				System.out.println(board);
+				System.out.println("You lose!");
+				running=false;
 			}
 		}
-		System.out.println("Loop exited");
 		scanner.close();
 
 	}
