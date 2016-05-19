@@ -1,7 +1,6 @@
-
+//Add test for loser - traverse board, check if current tile == next
 public class Board {
 	private Tile[][] board;
-	//Constructors
 	public Board() {
 		board = new Tile[4][4];
 	}
@@ -51,7 +50,9 @@ public class Board {
 		}
 		return false;
 	}
-	//Mutators
+	/*
+	 * Mutators
+	 */
 	public void spawnTile() {
 		java.util.Random random = new java.util.Random();
 		int row = random.nextInt(4);
@@ -82,7 +83,10 @@ public class Board {
 			System.out.println("Failed to spawn new tile: Board full");
 		}
 	}
-	//Moves
+	
+	/*
+	 * Moves
+	 */
 	public boolean up() {
 		boolean result=false; //Tells whether tiles have been moved
 		//Move the tiles
@@ -92,23 +96,16 @@ public class Board {
 				
 				if (board[row][col]!=null) { //If tile contains value
 					if (board[row-1][col]==null) { //If space above is empty
-						board[row-1][col]=board[row][col];
-						board[row][col]=null;
-						
-						description(row,col,row-1,col,false);
-						
+						move(row,col,row-1,col);
 						result=true;
+						
 						row=1;
 						col=-1;
 					} else if (board[row-1][col].equals(board[row][col]) && //If tile above is same value
 							   !board[row-1][col].used() && !board[row][col].used()) { //And neither tile has been used
-						board[row-1][col].doubleValue(); //Combine the tiles
-						board[row-1][col].setUsed(true); //Mark the above tile as used
-						board[row][col]=null;
-						
-						description(row,col,row-1,col,true);
-						
+						combine(row,col,row-1,col);
 						result=true;
+						
 						row=1;
 						col=-1;
 					}
@@ -126,24 +123,17 @@ public class Board {
 				
 				if(board[row][col]!=null) {
 					if (board[row+1][col]==null) {
-						board[row+1][col]=board[row][col];
-						board[row][col]=null;
-						
-						description(row,col,row+1,col,false);
-						
+						move(row,col,row+1,col);
 						result=true;
+						
 						row=2;
 						col=0;
 					}
 					else if (board[row+1][col].equals(board[row][col]) &&
 							 !board[row+1][col].used() && !board[row][col].used()) {
-						board[row+1][col].doubleValue();
-						board[row+1][col].setUsed(true);
-						board[row][col]=null;
-						
-						description(row,col,row+1,col,true);
-						
+						combine(row,col,row+1,col);
 						result=true;
+						
 						row=2;
 						col=0;
 					}
@@ -160,23 +150,16 @@ public class Board {
 				iteration(row,col);
 				if(board[row][col]!=null) {
 					if (board[row][col-1]==null) {
-						board[row][col-1]=board[row][col];
-						board[row][col]=null;
-						
-						description(row,col,row,col-1,false);
-						
+						move(row,col,row,col-1);
 						result=true;
+						
 						row=-1;
 						col=1;
 					} else if(board[row][col-1].equals(board[row][col]) &&
 							!board[row][col-1].used() && !board[row][col].used()) {
-					board[row][col-1].doubleValue();
-					board[row][col-1].setUsed(true);
-					board[row][col]=null;
-					
-					description(row,col,row,col-1,true);
-					
+					combine(row,col,row,col-1);
 					result=true;
+					
 					row=-1;
 					col=1;
 					}
@@ -193,23 +176,16 @@ public class Board {
 				iteration(row,col);
 				if(board[row][col]!=null) {
 					if(board[row][col+1]==null) {
-						board[row][col+1]=board[row][col];
-						board[row][col]=null;
-						
-						description(row,col,row,col+1,false);
-						
+						move(row,col,row,col+1);
 						result=true;
+						
 						row=-1;
 						col=2;
 					} else if (board[row][col+1].equals(board[row][col]) &&
 							!board[row][col+1].used() && !board[row][col].used()) {
-						board[row][col+1].doubleValue();
-						board[row][col+1].setUsed(true);
-						board[row][col]=null;
-						
-						description(row,col,row,col+1,true);
-						
+						combine(row,col,row,col+1);
 						result=true;
+						
 						row=-1;
 						col=2;
 					}
@@ -226,6 +202,17 @@ public class Board {
 				if(board[row][col]!=null) board[row][col].setUsed(false);
 			}
 		}
+	}
+	private void move(int r1, int c1, int r2, int c2) {
+		board[r2][c2]=board[r1][c1];
+		board[r1][c1]=null;
+		description(r1,c1,r2,c2,false);
+	}
+	private void combine(int r1, int c1, int r2, int c2) {
+		board[r2][c2].doubleValue();
+		board[r2][c2].setUsed(true);
+		board[r1][c1]=null;
+		description(r1,c1,r2,c2,true);
 	}
 	//Debug messages
 	private void iteration(int row, int col) {
