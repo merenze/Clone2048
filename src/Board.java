@@ -86,7 +86,7 @@ public class Board {
 						col=0;
 					}
 				}
-				System.out.printf("Attempting to spawn tile at [%d][%d]\n",row,col);
+				//System.out.printf("Attempting to spawn tile at [%d][%d]\n",row,col);
 				try {
 					valid=board[row][col]==null;
 				} catch (ArrayIndexOutOfBoundsException ex) {
@@ -94,9 +94,9 @@ public class Board {
 				}
 			}
 			board[row][col]=new Tile();
-			System.out.printf("Spawning new tile at [%d][%d]\n",row,col);
+			//System.out.printf("Spawning new tile at [%d][%d]\n",row,col);
 		} else {
-			System.out.println("Failed to spawn new tile: Board full");
+			//System.out.println("Failed to spawn new tile: Board full");
 		}
 	}
 	
@@ -108,7 +108,7 @@ public class Board {
 		//Move the tiles
 		for (int row=1;row<=3;row++) {
 			for (int col=0;col<=3;col++) {
-				iteration(row, col);
+				//iteration(row, col);
 				
 				if (board[row][col]!=null) { //If tile contains value
 					if (board[row-1][col]==null) { //If space above is empty
@@ -135,7 +135,7 @@ public class Board {
 		boolean result=false;
 		for (int row=2;row>=0;row--) {
 			for (int col=0;col<=3;col++) {
-				iteration(row,col);
+				//iteration(row,col);
 				
 				if(board[row][col]!=null) {
 					if (board[row+1][col]==null) {
@@ -163,7 +163,7 @@ public class Board {
 		boolean result=false;
 		for (int col=1;col<=3;col++) {
 			for (int row=0;row<=3;row++) {
-				iteration(row,col);
+				//iteration(row,col);
 				if(board[row][col]!=null) {
 					if (board[row][col-1]==null) {
 						move(row,col,row,col-1);
@@ -189,7 +189,7 @@ public class Board {
 		boolean result=false;
 		for (int col=2;col>=0;col--) {
 			for (int row=0;row<=3;row++) {
-				iteration(row,col);
+				//iteration(row,col);
 				if(board[row][col]!=null) {
 					if(board[row][col+1]==null) {
 						move(row,col,row,col+1);
@@ -222,14 +222,14 @@ public class Board {
 	private void move(int r1, int c1, int r2, int c2) {
 		board[r2][c2]=board[r1][c1];
 		board[r1][c1]=null;
-		description(r1,c1,r2,c2,false);
+		//description(r1,c1,r2,c2,false);
 	}
 	private void combine(int r1, int c1, int r2, int c2) {
 		board[r2][c2].doubleValue();
 		board[r2][c2].setUsed(true);
 		board[r1][c1]=null;
 		score+=board[r2][c2].getValue();
-		description(r1,c1,r2,c2,true);
+		//description(r1,c1,r2,c2,true);
 	}
 	//Debug messages
 	private void iteration(int row, int col) {
