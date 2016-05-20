@@ -28,19 +28,15 @@ public class Main {
 					switch(move.toUpperCase()) {
 						case "W":
 							if(board.up()) valid=true;
-							Runtime.getRuntime().exec("clear");
 							break;
 						case "A":
 							if(board.left()) valid=true;
-							Runtime.getRuntime().exec("clear");
 							break;
 						case "S":
 							if(board.down()) valid=true;
-							Runtime.getRuntime().exec("clear");
 							break;
 						case "D":
 							if(board.right()) valid=true;
-							Runtime.getRuntime().exec("clear");
 							break;
 						default:
 							System.out.println("Please enter a valid move.");
