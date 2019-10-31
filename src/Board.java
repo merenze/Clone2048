@@ -9,7 +9,7 @@ public class Board {
 	@Override
 	public String toString() {
 		String result="\nScore: " + score +
-				"\n|----|----|----|----|\n";
+				"\n+----+----+----+----+\n";
 		for (int row=0;row<4;row++) {
 			result+="|";
 			for (int col=0;col<4;col++) {
@@ -30,7 +30,7 @@ public class Board {
 					}
 				}
 			}
-			result+="\n|----|----|----|----|\n";
+			result+="\n+----+----+----+----+\n";
 		}
 		return result;
 	}
