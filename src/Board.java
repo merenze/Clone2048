@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+
 //Add test for loser - traverse board, check if current tile == next
 public class Board {
 	/**
@@ -96,30 +99,15 @@ public class Board {
 	 * Spawn a tile in a random spot on the board.
 	 */
 	public void spawnTile() {
-		java.util.Random random = new java.util.Random();
-		int row = random.nextInt(4);
-		int col = random.nextInt(4);
-		boolean valid = board[row][col] == null;
-		if (!isFull()) {
-			while (!valid) {
-				if (row < 3) {
-					row++;
-				} else {
-					row = 0;
-					if (col < 3) {
-						col++;
-					} else {
-						col = 0;
-					}
+		ArrayList<int[]> emptyTiles = new ArrayList<>();
+		for (int i = 0; i < 4; i++)
+			for (int j = 0; j < 4; j++)
+				if (board[i][j] == null) {
+					int[] coord = {i, j};
+					emptyTiles.add(Arrays.copyOf(coord, 2));
 				}
-				try {
-					valid = board[row][col] == null;
-				} catch (ArrayIndexOutOfBoundsException ex) {
-					System.out.printf("Array index out of bounds: [%d][%d]\n", row, col);
-				}
-			}
-			board[row][col] = new Tile();
-		}
+		int[] coord = emptyTiles.get(new java.util.Random().nextInt(emptyTiles.size()));
+		board[coord[0]][coord[1]] = new Tile();
 	}
 	
 	/**
