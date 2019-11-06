@@ -8,23 +8,35 @@ public class Board {
 	 */
 	private Tile[][] board;
 	/**
+	 * Side length of the board
+	 */
+	private int size;
+	/**
 	 * Score for this game
 	 */
 	private int score;
 	
-	/**
-	 * Create a new board
-	 */
 	public Board() {
-		board = new Tile[4][4];
+		this(4);
+	}
+	/**
+	 * @param size Side length of the board
+	 */
+	public Board(int size) {
+		this.size = size;
+		board = new Tile[size][size];
 	}
 
 	@Override
 	public String toString() {
-		String result = "\nScore: " + score + "\n+----+----+----+----+\n";
-		for (int row = 0; row < 4; row++) {
+		String result = "\nScore: " + score + "\n+";
+		for (int i = 0; i < size; i++)
+			result += "----+";
+		result += "\n";
+		
+		for (int row = 0; row < size; row++) {
 			result += "|";
-			for (int col = 0; col < 4; col++) {
+			for (int col = 0; col < size; col++) {
 				if (board[row][col] == null) {
 					result += "    |";
 				} else {
@@ -41,7 +53,10 @@ public class Board {
 					}
 				}
 			}
-			result += "\n+----+----+----+----+\n";
+			result += "\n+";
+			for (int i = 0; i < size; i++)
+				result += "----+";
+			result += "\n";
 		}
 		return result;
 	}
@@ -50,8 +65,8 @@ public class Board {
 	 * @return True if the board is full, else false.
 	 */
 	public boolean isFull() {
-		for (int row = 0; row <= 3; row++) {
-			for (int col = 0; col <= 3; col++) {
+		for (int row = 0; row < size; row++) {
+			for (int col = 0; col < size; col++) {
 				if (board[row][col] == null)
 					return false;
 			}
@@ -63,8 +78,8 @@ public class Board {
 	 * @return True if a 2048 tile exists, else false.
 	 */
 	public boolean victory() {
-		for (int row = 0; row <= 3; row++) {
-			for (int col = 0; col <= 3; col++) {
+		for (int row = 0; row < size; row++) {
+			for (int col = 0; col < size; col++) {
 				if (board[row][col] != null) {
 					if (board[row][col].getValue() == 2048)
 						return true;
@@ -80,14 +95,14 @@ public class Board {
 	public boolean lost() {
 		if (!isFull())
 			return false;
-		for (int row = 0; row <= 3; row++) {
-			for (int col = 0; col <= 2; col++) {
+		for (int row = 0; row < size; row++) {
+			for (int col = 0; col < size - 1; col++) {
 				if (board[row][col].equals(board[row][col + 1]))
 					return false;
 			}
 		}
-		for (int col = 0; col <= 3; col++) {
-			for (int row = 0; row <= 2; row++) {
+		for (int col = 0; col < size; col++) {
+			for (int row = 0; row < size - 1; row++) {
 				if (board[row][col].equals(board[row + 1][col]))
 					return false;
 			}
@@ -100,8 +115,8 @@ public class Board {
 	 */
 	public void spawnTile() {
 		ArrayList<int[]> emptyTiles = new ArrayList<>();
-		for (int i = 0; i < 4; i++)
-			for (int j = 0; j < 4; j++)
+		for (int i = 0; i < size; i++)
+			for (int j = 0; j < size; j++)
 				if (board[i][j] == null) {
 					int[] coord = {i, j};
 					emptyTiles.add(Arrays.copyOf(coord, 2));
@@ -117,8 +132,8 @@ public class Board {
 	public boolean up() {
 		boolean result = false; // Tells whether tiles have been moved
 		// Move the tiles
-		for (int row = 1; row <= 3; row++) {
-			for (int col = 0; col <= 3; col++) {
+		for (int row = 1; row < size; row++) {
+			for (int col = 0; col < size; col++) {
 				// If tile contains value
 				if (board[row][col] != null) {
 					// If space above is empty
@@ -152,8 +167,8 @@ public class Board {
 	 */
 	public boolean down() {
 		boolean result = false;
-		for (int row = 2; row >= 0; row--) {
-			for (int col = 0; col <= 3; col++) {
+		for (int row = size - 2; row >= 0; row--) {
+			for (int col = 0; col < size; col++) {
 				// iteration(row,col);
 
 				if (board[row][col] != null) {
@@ -161,14 +176,14 @@ public class Board {
 						move(row, col, row + 1, col);
 						result = true;
 
-						row = 2;
+						row = size - 2;
 						col = 0;
 					} else if (board[row + 1][col].equals(board[row][col]) && !board[row + 1][col].used()
 							&& !board[row][col].used()) {
 						combine(row, col, row + 1, col);
 						result = true;
 
-						row = 2;
+						row = size - 2;
 						col = 0;
 					}
 				}
@@ -184,8 +199,8 @@ public class Board {
 	 */
 	public boolean left() {
 		boolean result = false;
-		for (int col = 1; col <= 3; col++) {
-			for (int row = 0; row <= 3; row++) {
+		for (int col = 1; col < size; col++) {
+			for (int row = 0; row < size; row++) {
 				// iteration(row,col);
 				if (board[row][col] != null) {
 					if (board[row][col - 1] == null) {
@@ -215,8 +230,8 @@ public class Board {
 	 */
 	public boolean right() {
 		boolean result = false;
-		for (int col = 2; col >= 0; col--) {
-			for (int row = 0; row <= 3; row++) {
+		for (int col = size - 2; col >= 0; col--) {
+			for (int row = 0; row < size; row++) {
 				// iteration(row,col);
 				if (board[row][col] != null) {
 					if (board[row][col + 1] == null) {
@@ -224,14 +239,14 @@ public class Board {
 						result = true;
 
 						row = -1;
-						col = 2;
+						col = size - 2;
 					} else if (board[row][col + 1].equals(board[row][col]) && !board[row][col + 1].used()
 							&& !board[row][col].used()) {
 						combine(row, col, row, col + 1);
 						result = true;
 
 						row = -1;
-						col = 2;
+						col = size - 2;
 					}
 				}
 			}
@@ -242,8 +257,8 @@ public class Board {
 
 	// Helper methods
 	private void markUnused() {
-		for (int row = 0; row < 4; row++) {
-			for (int col = 0; col < 4; col++) {
+		for (int row = 0; row < size; row++) {
+			for (int col = 0; col < size; col++) {
 				if (board[row][col] != null)
 					board[row][col].setUsed(false);
 			}

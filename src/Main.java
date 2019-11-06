@@ -2,8 +2,15 @@ import java.io.IOException;
 
 public class Main {
 	public static void main(String[] args) throws IOException {
-		Board board = new Board();
 		java.util.Scanner scanner = new java.util.Scanner(System.in);
+
+		System.out.print("Enter board size: ");
+		int size;
+		while ((size = scanner.nextInt()) < 1) {
+			System.out.print("Try again, stupid. ");
+		}
+		Board board = new Board(size);
+		
 		boolean running = true;
 		boolean valid;
 		boolean skip = false;
